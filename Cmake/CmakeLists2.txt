@@ -1,0 +1,30 @@
+#Minimum CMake Version required. Mandatory.
+cmake_minimum_required(VERSION 3.0)
+
+#Project name. Helps once things become complicated.
+project(test)
+
+#Setting build!<Important, can be set to debug and release configs
+set(CMAKE_BUILD_TYPE Release)
+
+
+#Bringing the self made headers.
+#Bringing the headerfiles into the env.
+include_directories(include)
+
+#Setting my sources.Can be done this way, but is tedious. We'll use GLOB method instead.
+#set(SOURCES
+#	main.cpp
+#	src/Useless.cpp
+#)
+
+
+#Using the file(GLOB ..) Method instead. 
+#We can use GLOB_RECURSE for a full list.
+file(GLOB SOURCES src/*.cpp)
+
+#Generating library reference here, making sure that the cmake file knows it's a lib.
+add_library(Useless SHARED ${SOURCES})
+
+#Installing libs in a directory
+install(TARGETS Useless DESTINATION /build/lib/)
