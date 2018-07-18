@@ -1,0 +1,37 @@
+#Minimum CMake Version required. Mandatory.
+cmake_minimum_required(VERSION 3.1)
+
+set (CMAKE_CXX_STANDARD 11)
+#Project name. Helps once things become complicated.
+project(test)
+
+#Setting build!<Important, can be set to debug and release configs
+set(CMAKE_BUILD_TYPE Release)
+
+#Using the shared library of where the shared library is. 
+set(PROJECT_LIBS 
+	libUseless	
+)
+link_directories(build)
+
+
+add_subdirectory(
+	libs/cpr
+	libs/JSON
+)
+
+#Bringing the self made headers.
+#Bringing the headerfiles into the env.
+include_directories(
+	include
+	${CPR_INCLUDE_DIRS} 
+	${JSON_INCLUDE_DIRS}
+)
+
+
+#The final exe file that is generated and it's usage.
+add_executable(Final main.cpp)
+
+#Finally, we link the library to the Main source project.
+target_link_libraries(Final ${PROJECT_LIBS} ${CPR_LIBRARIES})
+target_link_libraries(Final ${CPR_INCLUDE_DIRS})
